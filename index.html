@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little Hello 💗</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap');
+
+:root {
+  --pink-1: #fff4f7;
+  --pink-2: #ffe3eb;
+  --pink-3: #ffc4d5;
+  --rose: #e97c9b;
+  --deep: #8f405c;
+  --text: #633847;
+  --white: rgba(255,255,255,.82);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  font-family: "DM Sans", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.95), transparent 24%),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,.7), transparent 27%),
+    linear-gradient(135deg, var(--pink-1), var(--pink-2));
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: .35;
+  pointer-events: none;
+  animation: floatGlow 8s ease-in-out infinite alternate;
+}
+body::before { background: #ffb5ca; top: -120px; left: -100px; }
+body::after { background: #f8c3d7; bottom: -130px; right: -90px; animation-delay: -3s; }
+
+.scene {
+  position: relative;
+  width: min(92vw, 620px);
+  min-height: 620px;
+  display: grid;
+  place-items: center;
+}
+
+.intro-card,
+.message-card {
+  position: absolute;
+  width: 100%;
+  min-height: 560px;
+  padding: 54px 35px 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: 34px;
+  background: var(--white);
+  box-shadow: 0 30px 80px rgba(158, 71, 101, .18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.intro-card {
+  z-index: 2;
+  animation: cardIn .9s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.message-card {
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(25px) scale(.94);
+  pointer-events: none;
+}
+
+.tiny {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rose);
+}
+
+h1, h2 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  color: var(--deep);
+  margin: 0;
+}
+
+h1 { font-size: clamp(36px, 7vw, 55px); }
+h2 { font-size: clamp(42px, 8vw, 64px); }
+
+.hint {
+  margin: 13px 0 22px;
+  font-size: 14px;
+  opacity: .75;
+}
+
+.gift-wrap {
+  position: relative;
+  width: 220px;
+  height: 190px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  margin: 15px 0 4px;
+  transform: translateY(0);
+  transition: transform .25s ease;
+  outline: none;
+}
+
+.gift-wrap:hover { transform: translateY(-7px) scale(1.025); }
+.gift-wrap:focus-visible { filter: drop-shadow(0 0 10px rgba(233,124,155,.7)); }
+
+.gift-body {
+  position: absolute;
+  width: 142px;
+  height: 108px;
+  left: 39px;
+  top: 64px;
+  border-radius: 7px 7px 12px 12px;
+  background: linear-gradient(135deg, #ffb2c7, #e87d9e);
+  box-shadow: inset 0 -10px 18px rgba(146,54,84,.1), 0 17px 28px rgba(152,64,91,.2);
+}
+
+.gift-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent 45%, rgba(255,255,255,.25) 49%, rgba(255,255,255,.25) 56%, transparent 60%);
+}
+
+.gift-lid {
+  position: absolute;
+  width: 166px;
+  height: 42px;
+  left: 27px;
+  top: 42px;
+  z-index: 3;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #ffcad8, #ee91ac);
+  box-shadow: 0 8px 16px rgba(146,54,84,.17);
+  transform-origin: 12px 38px;
+  transition: transform .9s cubic-bezier(.2,.9,.25,1.2);
+}
+
+.ribbon-horizontal {
+  position: absolute;
+  height: 12px;
+  width: 100%;
+  left: 0;
+  top: 15px;
+  background: #fff1f5;
+  opacity: .88;
+}
+
+.ribbon-vertical {
+  position: absolute;
+  width: 19px;
+  height: 100%;
+  left: 62px;
+  top: 0;
+  background: rgba(255,241,245,.88);
+  z-index: 2;
+}
+
+.bow {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+  top: -27px;
+  background: #fff1f5;
+  border: 2px solid rgba(219,107,139,.22);
+  z-index: 4;
+}
+.bow-left { left: 51px; border-radius: 50% 12px 50% 50%; transform: rotate(20deg); }
+.bow-right { right: 51px; border-radius: 12px 50% 50% 50%; transform: rotate(-20deg); }
+
+.knot {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #fff8fa;
+  left: 74px;
+  top: -19px;
+  z-index: 5;
+}
+
+.gift-shadow {
+  position: absolute;
+  width: 145px;
+  height: 18px;
+  left: 38px;
+  bottom: 4px;
+  border-radius: 50%;
+  background: rgba(124,52,76,.18);
+  filter: blur(8px);
+}
+
+.click-text {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--rose);
+  animation: breathe 2s ease-in-out infinite;
+}
+
+.scene.open .gift-lid {
+  transform: translate(-14px, -58px) rotate(-18deg);
+}
+
+.scene.open .gift-wrap {
+  animation: giftBounce .7s ease;
+}
+
+.scene.open .intro-card {
+  animation: cardExit .95s cubic-bezier(.65,0,.8,.2) forwards;
+}
+
+.scene.open .message-card {
+  z-index: 3;
+  pointer-events: auto;
+  animation: messageIn 1.15s .45s cubic-bezier(.15,.85,.2,1) forwards;
+}
+
+.hello-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 12px;
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.divider {
+  margin: 8px 0 20px;
+  color: #e992aa;
+  font-size: 23px;
+}
+
+.message {
+  max-width: 430px;
+  line-height: 1.8;
+  margin: 0;
+  font-size: 15px;
+}
+
+.friend-line {
+  margin: 25px 0 10px;
+  padding: 13px 24px;
+  border-radius: 100px;
+  background: rgba(255, 216, 227, .55);
+  color: #9b4a64;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.sub-message {
+  margin: 4px 0 24px;
+  font-size: 13px;
+  line-height: 1.7;
+  opacity: .7;
+}
+
+.replay {
+  border: 1px solid rgba(221,117,146,.3);
+  border-radius: 999px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,.7);
+  color: #a0526c;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: .25s ease;
+}
+.replay:hover { background: #fff; transform: translateY(-2px); }
+
+.petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -30px;
+  width: 10px;
+  height: 7px;
+  border-radius: 100% 0 100% 0;
+  background: rgba(241,143,170,.62);
+  animation: fall linear infinite;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 30px);
+  opacity: 0;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.85);
+  box-shadow: 0 10px 30px rgba(120,55,78,.12);
+  font-size: 12px;
+  transition: .5s ease;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(25px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes cardExit {
+  0% { opacity: 1; transform: scale(1) rotate(0); }
+  35% { transform: scale(1.03) rotate(-1deg); }
+  100% { opacity: 0; transform: translateY(-45px) scale(.88) rotate(2deg); }
+}
+@keyframes messageIn {
+  0% { opacity: 0; transform: translateY(35px) scale(.92) rotate(-1deg); }
+  60% { opacity: 1; transform: translateY(-7px) scale(1.015) rotate(.4deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes giftBounce {
+  0%,100% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-12px) scale(1.04); }
+  70% { transform: translateY(3px) scale(.98); }
+}
+@keyframes breathe {
+  50% { opacity: .45; transform: translateY(3px); }
+}
+@keyframes gentleFloat {
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-7px) rotate(3deg); }
+}
+@keyframes fall {
+  0% { transform: translate3d(0,-30px,0) rotate(0deg); }
+  100% { transform: translate3d(var(--drift), 110vh, 0) rotate(540deg); }
+}
+@keyframes floatGlow {
+  from { transform: translate(0,0) scale(1); }
+  to { transform: translate(35px,20px) scale(1.12); }
+}
+
+@media (max-width: 600px) {
+  .scene { min-height: 100vh; width: 92vw; }
+  .intro-card, .message-card {
+    min-height: 590px;
+    padding: 42px 22px;
+    border-radius: 28px;
+  }
+  .gift-wrap { transform: scale(.9); margin: 10px 0 -4px; }
+  .gift-wrap:hover { transform: scale(.92) translateY(-5px); }
+  .message { font-size: 14px; }
+  .sub-message br { display: none; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="petals" aria-hidden="true"></div>
+
+  <main class="scene">
+    <section class="intro-card" id="introCard">
+      <div class="sparkles"></div>
+
+      <p class="tiny">A little hello for you ✨</p>
+      <h1>Hi, Classmate! 🌸</h1>
+      <p class="hint">I made something small just to say hi.</p>
+
+      <button class="gift-wrap" id="giftButton" aria-label="Open the gift">
+        <span class="gift-shadow"></span>
+        <span class="gift-lid">
+          <span class="ribbon ribbon-horizontal"></span>
+          <span class="bow bow-left"></span>
+          <span class="bow bow-right"></span>
+          <span class="knot"></span>
+        </span>
+        <span class="gift-body">
+          <span class="ribbon ribbon-vertical"></span>
+        </span>
+      </button>
+
+      <p class="click-text" id="clickText">Click the gift 🎁</p>
+    </section>
+
+    <section class="message-card" id="messageCard" aria-hidden="true">
+      <div class="hello-icon">🌸</div>
+
+      <p class="tiny">Hello from</p>
+      <h2>Tejendra Sonar</h2>
+      <div class="divider">✦</div>
+
+      <p class="message">
+        We’re classmates, and I thought it would be nice to say hi. 😊
+      </p>
+
+      <p class="friend-line">It would be nice to be friends. 🌷</p>
+
+      <p class="sub-message">
+        No pressure, no awkward speech — just a simple hello<br>
+        and a chance to get to know each other better.
+      </p>
+
+      <button class="replay" id="replayButton">Open again ✨</button>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">A little hello, just for you 🌸</div>
+
+  <script>
+const scene = document.querySelector(".scene");
+const giftButton = document.querySelector("#giftButton");
+const replayButton = document.querySelector("#replayButton");
+const clickText = document.querySelector("#clickText");
+const toast = document.querySelector("#toast");
+const petals = document.querySelector(".petals");
+
+function createPetals() {
+  for (let i = 0; i < 24; i++) {
+    const petal = document.createElement("span");
+    petal.className = "petal";
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
+    petal.style.animationDuration = (7 + Math.random() * 8) + "s";
+    petal.style.animationDelay = (-Math.random() * 12) + "s";
+    petal.style.transform = `scale(${0.55 + Math.random() * .8})`;
+    petals.appendChild(petal);
+  }
+}
+
+function openGift() {
+  if (scene.classList.contains("open")) return;
+  scene.classList.add("open");
+  clickText.textContent = "Just a little message for you 💗";
+
+  setTimeout(() => {
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2800);
+  }, 900);
+}
+
+function replay() {
+  scene.classList.remove("open");
+  clickText.textContent = "Click the gift 🎁";
+}
+
+giftButton.addEventListener("click", openGift);
+replayButton.addEventListener("click", replay);
+
+createPetals();
+
+  </script>
+</body>
+</html>
